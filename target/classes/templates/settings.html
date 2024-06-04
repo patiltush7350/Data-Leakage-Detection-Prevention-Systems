@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Settings</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-theme {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 70px auto 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        body.dark-theme .container {
+            background-color: #444444;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: inherit;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: inherit;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Navigation styles */
+        .navbar {
+            width: 100%;
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            display: inline-block;
+        }
+
+        .navbar a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Navigation links styles */
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .navigation a {
+            display: inline-block;
+            margin-right: 10px;
+            text-decoration: none;
+            color: #333333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #f2f2f2;
+        }
+
+        .navigation a:hover {
+            background-color: #e5e5e5;
+        }
+
+        body.dark-theme .navigation a {
+            color: #ffffff;
+            background-color: #555555;
+        }
+
+        body.dark-theme .navigation a:hover {
+            background-color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <a href="/home" aria-label="Go to home page">Home</a>
+        <a href="/logs" aria-label="Go to logs page">Logs</a>
+        <a href="/charts" aria-label="Go to charts page">Charts</a>
+    </div>
+
+    <div class="container">
+        <h1>Settings</h1>
+        
+        <!-- Settings form -->
+        <form id="settingsForm">
+            <div class="form-group">
+                <label for="theme">Theme</label>
+                <select id="theme" name="theme" aria-label="Select theme">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="notification">Enable Notifications</label>
+                <input type="checkbox" id="notification" name="notification" aria-label="Enable notifications">
+            </div>
+            <div class="form-group">
+                <label for="dataRetention">Data Retention Period (days)</label>
+                <input type="number" id="dataRetention" name="dataRetention" min="1" max="365" aria-label="Data retention period (days)" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Save Settings</button>
+            </div>
+        </form>
+        
+        <!-- Navigation links -->
+        <div class="navigation">
+            <a href="/home" aria-label="Go to home page">Go to Home</a>
+            <a href="/logs" aria-label="Go to logs page">Go to Logs</a>
+            <a href="/charts" aria-label="Go to charts page">Go to Charts</a>
+        </div>
+    </div>
+
+    <script>
+        
+        document.getElementById('settingsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const settings = {};
+            formData.forEach((value, key) => {
+                settings[key] = value;
+            });
+
+            
+            localStorage.setItem('settings', JSON.stringify(settings));
+            console.log('Settings saved:', settings);
+            alert('Settings have been saved successfully!');
+            applyTheme(settings.theme);
+        });
+
+      
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedSettings = JSON.parse(localStorage.getItem('settings'));
+            if (savedSettings) {
+                document.getElementById('theme').value = savedSettings.theme;
+                document.getElementById('notification').checked = savedSettings.notification === 'on';
+                document.getElementById('dataRetention').value = savedSettings.dataRetention;
+                applyTheme(savedSettings.theme);
+            }
+        });
+    </script>
+</body>
+</html>

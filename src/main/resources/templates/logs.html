@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<title>Logs</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f0f0f0;
+	margin: 0;
+	padding: 20px;
+}
+
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+	margin-top: 0;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+th, td {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+input[type="text"] {
+	padding: 8px;
+	margin-right: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+button {
+	padding: 8px 16px;
+	border: none;
+	border-radius: 4px;
+	background-color: #4CAF50;
+	color: white;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #45a049;
+}
+
+.navigation {
+	margin-top: 20px;
+}
+
+.navigation a {
+	display: inline-block;
+	margin-right: 10px;
+	padding: 8px 16px;
+	background-color: #333;
+	color: white;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+.navigation a:hover {
+	background-color: #555;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Data Transfer Logs</h1>
+
+		<table>
+			<thead>
+				<tr>
+					<th>User ID</th>
+					<th>Data Accessed</th>
+					<th>Timestamp</th>
+					<th>Action Type</th>
+				</tr>
+			</thead>
+			<tbody id="logsTableBody">
+				<!-- Logs will be dynamically populated here -->
+			</tbody>
+		</table>
+
+		<div>
+			<label for="filter">Filter by:</label> <input type="text" id="filter"
+				placeholder="Enter user ID">
+			<button onclick="filterLogs()">Apply Filter</button>
+		</div>
+
+		<div>
+			<label for="search">Search:</label> <input type="text" id="search"
+				placeholder="Enter keyword">
+			<button onclick="searchLogs()">Search</button>
+		</div>
+
+		<!-- Navigation links -->
+		<div class="navigation">
+			<a href="/home">Go to Home</a> <a href="/charts">Go to Charts</a> <a
+				href="/settings">Go to Settings</a>
+		</div>
+	</div>
+
+	<script>
+    function fetchLogs() {
+        fetch('/monitor/logs')
+            .then(response => response.json())
+            .then(data => displayLogs(data))
+            .catch(error => console.error('Error fetching logs:', error));
+    }
+
+    function displayLogs(logs) {
+        const logsTableBody = document.getElementById('logsTableBody');
+        logsTableBody.innerHTML = '';
+
+        logs.forEach(log => {
+            const row = `<tr>
+                            <td>${log.userId}</td>
+                            <td>${log.dataAccessed}</td>
+                            <td>${log.timestamp}</td>
+                            <td>${log.actionType}</td>
+                        </tr>`;
+            logsTableBody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+    function filterLogs() {
+        const filterValue = document.getElementById('filter').value.toLowerCase();
+        fetch('/monitor/logs')
+            .then(response => response.json())
+            .then(data => {
+                const filteredLogs = data.filter(log => log.userId.toLowerCase().includes(filterValue));
+                displayLogs(filteredLogs);
+            })
+            .catch(error => console.error('Error filtering logs:', error));
+    }
+
+    function searchLogs() {
+        const searchKeyword = document.getElementById('search').value.toLowerCase();
+        fetch('/monitor/logs')
+            .then(response => response.json())
+            .then(data => {
+                const searchedLogs = data.filter(log => 
+                    log.userId.toLowerCase().includes(searchKeyword) ||
+                    log.dataAccessed.toLowerCase().includes(searchKeyword) ||
+                    log.timestamp.toLowerCase().includes(searchKeyword) ||
+                    log.actionType.toLowerCase().includes(searchKeyword)
+                );
+                displayLogs(searchedLogs);
+            })
+            .catch(error => console.error('Error searching logs:', error));
+    }
+
+    // Fetch logs when the page loads
+    fetchLogs();
+</script>
+
+</body>
+</html>
