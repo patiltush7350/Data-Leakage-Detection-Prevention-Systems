@@ -1,45 +1,50 @@
-# 🚀 Data Loss Prevention (DLP) System
 
-Welcome to the Data Loss Prevention (DLP) System repository! This project is designed to monitor and manage data security, offering functionalities to detect and prevent potential data leaks.
+# 🚀 Data Leakage Detection and Prevention System
 
-## Components
+## Project Overview
+The aim of this project is to develop a system that can detect and prevent data leakage. The system will monitor data transfers, analyze patterns, and alert administrators of potential data leaks. It will also include a data visualization component to present security metrics and incidents.
 
-The following components constitute this project:
+## Key Features
+- **User Authentication and Authorization:** Secure login and role-based access control.
+- **Data Monitoring:** Track data transfer activities across the network.
+- **Leakage Detection:** Implement algorithms to detect unusual data access patterns.
+- **Alert System:** Notify administrators of potential data leaks.
+- **Data Visualization:** Dashboard to visualize security metrics, incidents, and trends.
 
-- 🌐 **ApiGateway**: Serves as the central entry point for client requests, efficiently routing them to the appropriate services.
-- ⚙️ **ConfigServer**: Centralizes configuration management for various services, simplifying setup and maintenance.
-- 🔍 **ServiceRegistry**: Offers service discovery and registration capabilities for services, ensuring seamless communication.
-- 📊 **DashboardService**: Provides a user interface for monitoring and managing data security, including viewing logs and alerts.
-- 🏢 **LogService**: Manages the collection, storage, and retrieval of data transfer logs.
-- 🚨 **AlertService**: Detects potential data leaks and issues alerts.
+## Technology Stack
+- **Backend:** Java, Spring Boot
+- **Database:** MySQL
+- **Frontend:** HTML, CSS, JavaScript (with D3.js or Chart.js for visualization)
+- **Additional Libraries:** Spring Security, Hibernate
 
-## Installation and Setup
+## Implementation Steps
+1. **Setup Spring Boot Project**
+    - Initialize a Spring Boot project using Spring Initializr or your preferred method.
+    - Include dependencies for Spring Web, Spring Security, Spring Data JPA, and MySQL.
+2. **Configure MySQL Database**
+    - Set up a MySQL database and configure the connection in `application.properties`.
+3. **User Authentication and Authorization**
+    - Implement user registration and login with Spring Security.
+    - Define roles such as ADMIN and USER and restrict access to certain endpoints based on roles.
+4. **Data Monitoring Module**
+    - Create entities to represent data transfer logs.
+    - Develop a service to log every data transfer activity, capturing details like user ID, data accessed, timestamp, and action type.
+5. **Leakage Detection Algorithms**
+    - Implement basic anomaly detection algorithms. For example, flag access patterns that deviate significantly from the user's typical behavior.
+    - Use statistical methods or machine learning techniques to enhance detection accuracy.
+6. **Alert System**
+    - Create a notification service that triggers alerts (via email, SMS, or in-app notifications) when a potential data leak is detected.
+    - Ensure the alert system integrates seamlessly with the monitoring module.
+7. **Data Visualization Dashboard**
+    - Set up a frontend using HTML, CSS, and JavaScript.
+    - Use a JavaScript library like D3.js or Chart.js to create interactive charts and graphs.
+    - Visualize key metrics such as the number of data access attempts, detected anomalies, and response times.
 
-To run the DLP system locally, follow these steps:
+## Usage
+- **Clone the Repository:**
+   ```bash
+   git clone https://github.com/your_username/data-leakage-detection.git
 
-1. 📥 **Clone this repository** to your local machine:
-
-   ```sh
-   git clone https://github.com/yourusername/dlp-system.git
-   cd dlp-system
-   ```
-
-2. 💻 **Ensure you have Java Development Kit (JDK) installed**.
-
-3. 🛠️ **Navigate to each service directory** (e.g., ApiGateway, ConfigServer, etc.) and follow the setup instructions provided in their respective README files.
-
-4. 🏃‍♂️ **Run the services**:
-
-   - Start the ConfigServer.
-   - Start the ServiceRegistry.
-   - Start the ApiGateway.
-   - Start the LogService.
-   - Start the AlertService.
-   - Start the DashboardService.
-
-5. 🚀 **Access the Dashboard**:
-
-   Open your browser and navigate to [http://localhost:8080/home](http://localhost:8080/home) to interact with the system.
 
 ## Usage
 
