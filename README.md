@@ -1,4 +1,4 @@
-🚀 #Data Loss Prevention (DLP) System
+🚀 Data Loss Prevention (DLP) System
 Welcome to the Data Loss Prevention (DLP) System repository! This project is designed to monitor and manage data security, offering functionalities to detect and prevent potential data leaks.
 
 Components
