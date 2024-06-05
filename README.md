@@ -1,4 +1,5 @@
 🚀 Data Loss Prevention (DLP) System
+
 Welcome to the Data Loss Prevention (DLP) System repository! This project is designed to monitor and manage data security, offering functionalities to detect and prevent potential data leaks.
 
 Components
@@ -10,6 +11,7 @@ The following components constitute this project:
 📊 DashboardService: Provides a user interface for monitoring and managing data security, including viewing logs and alerts.
 🏢 LogService: Manages the collection, storage, and retrieval of data transfer logs.
 🚨 AlertService: Detects potential data leaks and issues alerts.
+
 Installation and Setup
 To run the DLP system locally, follow these steps:
 
